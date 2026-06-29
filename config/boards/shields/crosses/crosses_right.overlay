@@ -58,7 +58,6 @@
         irq-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         scroll-layers = <4>;
         snipe-layers = <5>;
-        automouse-layer = <3>;
     };
 };
 
@@ -67,8 +66,22 @@
 
 
 / {
+    trackball_deadzone: trackball_deadzone {
+        compatible = "zmk,input-processor-deadzone";
+        #input-processor-cells = <0>;
+        threshold = <10>;
+        timeout-ms = <150>;
+    };
+
+    auto_mouse_layer: auto_mouse_layer {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+        require-prior-idle-ms = <250>;
+    };
+
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
+        input-processors = <&trackball_deadzone &auto_mouse_layer 3 400>;
     };
 };

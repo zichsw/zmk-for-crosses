@@ -19,6 +19,25 @@ This repository provides the official ZMK firmware for the "MIAOMIAO" hardware v
 
 ---
 
+## Trackball Behavior
+
+This branch uses ZMK input processors for the right-half PMW3610 trackball:
+
+- Normal pointer speed is `1600 CPI / 4`, matching the original configuration.
+- The PMW driver's direct `automouse-layer` activation is disabled.
+- A deadzone processor filters micro-vibrations before they become pointer movement.
+- ZMK's temporary layer processor activates the `BUTTON` layer for mouse clicks after real trackball movement.
+- The `BUTTON` layer will not activate until the keyboard has been idle for `250 ms`, which prevents normal typing from turning thumb keys into mouse buttons.
+
+Current tuning lives in `config/boards/shields/crosses/crosses_right.overlay`:
+
+- Deadzone threshold: `10`
+- Deadzone reset timeout: `150 ms`
+- Mouse-button layer timeout: `400 ms`
+- Prior keyboard idle required before mouse-button activation: `250 ms`
+
+---
+
 ## 🛠️ Graphical Configuration
 
 ### 1. ZMK Studio (Simple Real-time Remapping)

@@ -19,6 +19,25 @@
 
 ---
 
+## 轨迹球行为
+
+此分支在右半边 PMW3610 轨迹球上使用 ZMK input processors：
+
+- 普通指针速度为 `1600 CPI / 4`，与原始配置一致。
+- 已关闭 PMW 驱动内置的直接 `automouse-layer` 激活。
+- deadzone processor 会先过滤微小震动，避免其变成鼠标移动。
+- ZMK temporary layer processor 会在真实轨迹球移动后临时激活用于鼠标按键的 `BUTTON` 层。
+- 键盘输入后需要空闲 `250 ms`，`BUTTON` 层才允许被轨迹球激活，避免正常打字时拇指键意外变成鼠标按键。
+
+当前调校位于 `config/boards/shields/crosses/crosses_right.overlay`：
+
+- Deadzone 阈值：`10`
+- Deadzone 重置时间：`150 ms`
+- 鼠标按键层保持时间：`400 ms`
+- 鼠标按键层激活前所需键盘空闲时间：`250 ms`
+
+---
+
 ## 🛠️ 图形化配置
 
 ### 1. ZMK Studio（简单的实时改键）
